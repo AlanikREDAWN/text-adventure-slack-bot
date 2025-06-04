@@ -1,4 +1,5 @@
 PORT="$1"
+export PORT="$PORT"
 
 kill -9 $(lsof -ti ":$PORT") 2>/dev/null
 git pull
