@@ -1,0 +1,122 @@
+title: "Tutorial Adventure"
+start: "great_hall"
+
+rooms:
+  great_hall:
+    name: "Great Hall"
+    description: "You see a strange 6-legged creature. It seems very friendly. The room is the biggest hall you've ever imagined. And it's filled with strange artifacts."
+    exits:
+      north: "hallway"
+    npcs:
+      - "glykoy"
+    items:
+      - "great_hammer"
+    triggers:
+      - "wake"
+
+  hallway:
+    name: "Hallway"
+    description: "A narrow stone hallway with flickering torches. A door stands to the east, and the Great Hall lies to the south."
+    exits:
+      south: "great_hall"
+      east: "training_room"
+    npcs: []
+    items: []
+
+  training_room:
+    name: "Training Room"
+    description: "This small room has stone walls and a glowing rune circle. A wooden dummy stands in the center, ready for you to attack."
+    exits:
+      west: "hallway"
+    npcs:
+      - "dummy"
+    items: []
+
+npcs:
+  glykoy:
+    name: "Glykoy"
+    location: "great_hall"
+    dialogue:
+      wake:
+        - "I see you've woken up."
+        - "Don't get scared — I'm just here to help you. In becoming the greatest wizard, you'll need all the help you can get."
+    interact_options:
+      - option: "Where am I?"
+        response: "You are in the Great Hall. It's the best place to start your adventure. There are many things to explore here."
+      - option: "Where do I start?"
+        response: "You should start by exploring the room and finding the Great Hammer. Once you have it, you can use it to fight enemies and progress through the game."
+
+  dummy:
+    name: "Training Dummy"
+    location: "training_room"
+    dialogue:
+      default:
+        - "It stares at you blankly. Well, it's just a dummy."
+    interact_options:
+      - option: "Hit dummy"
+        response: "You swing your weapon at the dummy! THUD. That felt good."
+    targetable: true
+
+items:
+  great_hammer:
+    name: "Great Hammer"
+    description: "A massive hammer used for fighting enemies."
+    pickupable: true
+    usable: false
+    use_effect:
+      type: "hit"
+      target: "npcs"
+
+events:
+  wake:
+    description: "You wake up and see a strange 6-legged creature. It seems very friendly. The room is the biggest hall you've ever imagined. It's filled with strange artifacts. You notice a door in the north."
+    type: "message"
+    message: "glykoy{dialogue:wake}"
+    target: "great_hall"
+
+  tutorial_move:
+    description: "Player learns to move between rooms."
+    type: "message"
+    message: |
+      To move, use direction commands like:
+      `/go north`, `/go east`, `/go west`, or `/go south`
+      Try moving north to enter the hallway.
+    target: "great_hall"
+
+  tutorial_attack:
+    description: "Player learns how to attack."
+    type: "message"
+    message: |
+      To attack a target, use the `/attack` command:
+      `/attack dummy`
+      Try it on the training dummy to practice fighting!
+    target: "training_room"
+
+  tutorial_commands:
+    description: "Explains common commands."
+    type: "message"
+    message: |
+      Here are some useful commands you can try:
+      • `/look` — reprint the room's description
+      • `/talk to [npc]` — talk to someone (like Glykoy)
+      • `/pickup [item]` — take an item
+      • `/use [item]` — use an item
+      • `/inventory` — see what you're carrying
+    target: "hallway"
+
+flags:
+  wake:
+    description: "If you have woken up."
+    initial: false
+
+  tutorial_movement_complete:
+    description: "Player has moved at least once."
+    initial: false
+
+  tutorial_attack_complete:
+    description: "Player has successfully attacked."
+    initial: false
+
+  picked_up_hammer:
+    description: "Player has picked up the Great Hammer."
+    initial: false
