@@ -20,6 +20,7 @@ rooms:
     exits:
       south: "great_hall"
       east: "training_room"
+      west: "ballroom"
     npcs: []
     items: []
 
@@ -31,6 +32,55 @@ rooms:
     npcs:
       - "dummy"
     items: []
+  
+  ballroom:
+    name: "Ballroom"
+    description: "A grand ballroom with an ornate chandeiler and a checkered marble floor. In one corner, you see a small red bed, and in another, a wooden dog house. In the third corner, you see a bird cage, and in the fourth, a glass habitat."
+    exits:
+      east: "hallway"
+    npcs: []
+    items: []
+    pets:
+      - "dog"
+      - "bird"
+      - "cat"
+      - "lizard"
+
+pets:
+  dog:
+    name: "Fiddo"
+    location: "ballroom"
+    interact_options:
+      - option: "Pet Fiddo"
+        response: "Fiddo wags his tail happily."
+      - option: "Feed Fiddo"
+        response: "You give Fiddo some food. He gobbles it up eagerly!"
+  bird:
+    name: "Oly"
+    location: "ballroom"
+    interact_options:
+      - option: "Talk to Oly"
+        response: "Oly chirps happily."
+      - option: "Feed Oly"
+        response: "You give Oly some hemp seeds. She pecks at them with vigor"
+  cat:
+    name: "Tabby"
+    location: "ballroom"
+    interact_options:
+      - option: "Pet Tabby"
+        response: "Tabby purrs happily"
+      - option: "Feed Tabby"
+        response: "You give Tabby some food. She licks it up carefully."
+  lizard:
+    name: "Robert"
+    location: "ballroom"
+    interact_options:
+      - option: "Pet Robert"
+        response: "Robert's eyes light up"
+      - option: "Feed Robert"
+        response: "You give Robert some food. He licks it up joyfully"
+    
+
 
 npcs:
   glykoy:
