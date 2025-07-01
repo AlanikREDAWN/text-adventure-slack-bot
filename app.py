@@ -16,11 +16,20 @@ with open('./stories/tutorial-story.yaml', 'r') as file:
 
 
 @app.command("/startadventure")
-def repeat_text(ack, respond, command):
+def repeat_text(ack, respond, command, client):
 
     ack()
-    respond(f"Rooms: {tutorialstory['rooms']}")
-    respond(f"it works")
+    user_id = command["user_id"]
+    message = f"Rooms: {tutorialstory['rooms']}"
+
+    try:
+        client.chat_postMessage(channel=user_id, text=message)
+    except Exception as e:
+        print(f"Error sending DM: {e}")
+        respond("Sorry, I couldn't send you a direct message.")
+
+    # respond(f"Rooms: {tutorialstory['rooms']}")
+    # respond(f"it works")
     
 
 # Start your app
