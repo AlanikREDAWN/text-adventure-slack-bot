@@ -11,7 +11,7 @@ SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")
 
 app = App(token=SLACK_BOT_TOKEN)
 
-with open('tutorial-story.yaml', 'r') as file:
+with open('./stories/tutorial-story.yaml', 'r') as file:
     tutorialstory = yaml.safe_load(file)
 
 
