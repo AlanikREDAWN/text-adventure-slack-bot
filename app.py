@@ -29,7 +29,6 @@ def start_adventure(ack, respond, command, client):
 			"text": {
 				"type": "plain_text",
 				"text": tutorial_player_location['name'],
-				"emoji": true
 			}
 		},
 		{
@@ -75,7 +74,6 @@ def go_north(ack, respond, command, client):
                 "text": {
                     "type": "plain_text",
                     "text": tutorial_player_location['name'],
-                    "emoji": true
                 }
             },
             {
