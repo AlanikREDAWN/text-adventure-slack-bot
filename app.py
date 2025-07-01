@@ -96,7 +96,7 @@ def go_north(ack, respond, command, client):
         ]
         try:
             client.chat_postMessage(channel=user_id, text=blocks)
-            client.chat_postMessage(blocks)
+            # client.chat_postMessage(blocks)
         
         except Exception as e:
             print(f"Error sending DM: {e}")
