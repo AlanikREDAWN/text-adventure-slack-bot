@@ -72,9 +72,9 @@ def go(ack, respond, command, client):
     if not user_text:
         respond("Please provide a direction to travel, such as `/go north`.")
         return
-    elif user_text == "ping":
+    elif "ping" in user_text:
         respond("pong!")
-    elif user_text == "north":
+    elif "north" in user_text:
         try:
             if tutorial_player_location == tutorialstory['rooms']['great_hall']:
                 tutorial_player_location = tutorialstory['rooms']['hallway']
