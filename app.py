@@ -73,39 +73,40 @@ def go(ack, respond, command, client):
         respond("Please provide a direction to travel, such as `/go north`.")
         return
     elif user_text == "north":
-        if tutorial_player_location == tutorialstory['rooms']['great_hall']:
-            tutorial_player_location = tutorialstory['rooms']['hallway']
-            blocks = [
-                {
-                    "type": "header",
-                    "text": {
-                        "type": "plain_text",
-                        "text": tutorial_player_location['name'],
-                    }
-                },
-                {
-                    "type": "rich_text",
-                    "elements": [
-                        {
-                            "type": "rich_text_section",
-                            "elements": [
-                                {
-                                    "type": "text",
-                                    "text": tutorial_player_location['description'],
-                                    # "style": {
-                                    #     "italic": true
-                                    # }
-                                }
-                            ]
+        try:
+            if tutorial_player_location == tutorialstory['rooms']['great_hall']:
+                tutorial_player_location = tutorialstory['rooms']['hallway']
+                blocks = [
+                    {
+                        "type": "header",
+                        "text": {
+                            "type": "plain_text",
+                            "text": tutorial_player_location['name'],
                         }
-                    ]
-                }
-            ]
-            try:
+                    },
+                    {
+                        "type": "rich_text",
+                        "elements": [
+                            {
+                                "type": "rich_text_section",
+                                "elements": [
+                                    {
+                                        "type": "text",
+                                        "text": tutorial_player_location['description'],
+                                        # "style": {
+                                        #     "italic": true
+                                        # }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            
                 client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
                 # client.chat_postMessage(blocks)
             
-            except Exception as e:
+        except Exception as e:
                 print(f"Error sending DM: {e}")
                 respond("Sorry, I couldn't send you a direct message.")
         else:
