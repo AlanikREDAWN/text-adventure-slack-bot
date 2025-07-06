@@ -15,6 +15,7 @@ app = App(token=SLACK_BOT_TOKEN)
 with open('./stories/tutorial-story.yaml', 'r') as file:
     tutorialstory = yaml.safe_load(file)
 
+global tutorial_player_location
 tutorial_player_location = tutorialstory['rooms']['great_hall']
 
 @app.command("/startadventure")
