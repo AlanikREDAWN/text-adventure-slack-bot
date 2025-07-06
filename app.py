@@ -52,7 +52,7 @@ def start_adventure(ack, respond, command, client):
 
     try:
         # client.chat_postMessage(channel=user_id, text=message)
-        client.chat_postMessage(channel=user_id, text="test" blocks=blocks)
+        client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
         
     except Exception as e:
         print(f"Error sending DM: {e}")
@@ -95,7 +95,7 @@ def go_north(ack, respond, command, client):
             }
         ]
         try:
-            client.chat_postMessage(channel=user_id, text="test" blocks=blocks)
+            client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
             # client.chat_postMessage(blocks)
         
         except Exception as e:
