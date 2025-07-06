@@ -64,15 +64,14 @@ def start_adventure(ack, respond, command, client):
 @app.command("/go")
 def go(ack, respond, command, client):
     ack()
-    user_text = command.get("text", "").strip()
+    user_text = command.get("text", "").strip().lower()
     # user_text = command["text"]
     user_id = command["user_id"]
 
     if not user_text:
         respond("Please provide a direction to travel, such as `/go north`.")
         return
-
-    if user_text == "north":
+    elif user_text == "north":
         if tutorial_player_location == tutorialstory['rooms']['great_hall']:
             tutorial_player_location = tutorialstory['rooms']['hallway']
             blocks = [
