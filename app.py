@@ -65,7 +65,7 @@ def start_adventure(ack, respond, command, client):
 def go(ack, respond, command, client):
     ack()
     # user_text = command.get("text", "").strip()
-    user_text = command["user_text"]
+    user_text = command["text"]
     user_id = command["user_id"]
 
     if not user_text:
