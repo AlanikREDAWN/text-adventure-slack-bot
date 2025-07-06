@@ -61,48 +61,54 @@ def start_adventure(ack, respond, command, client):
     # respond(f"Rooms: {tutorialstory['rooms']}")
     # respond(f"it works")
 
-@app.command("/go north")
-def go_north(ack, respond, command, client):
+@app.command("/go")
+def go(ack, respond, command, client):
     ack()
+    user_text = command.get("text", "").strip()
     user_id = command["user_id"]
 
-    if tutorial_player_location == tutorialstory['rooms']['great_hall']:
-        tutorial_player_location = tutorialstory['rooms']['hallway']
-        blocks = [
-            {
-                "type": "header",
-                "text": {
-                    "type": "plain_text",
-                    "text": tutorial_player_location['name'],
-                }
-            },
-            {
-                "type": "rich_text",
-                "elements": [
-                    {
-                        "type": "rich_text_section",
-                        "elements": [
-                            {
-                                "type": "text",
-                                "text": tutorial_player_location['description'],
-                                # "style": {
-                                #     "italic": true
-                                # }
-                            }
-                        ]
+    if not user_text:
+        respond("Please provide a direction to travel, such as `/go north`.")
+        return
+
+    if user_text == "north":
+        if tutorial_player_location == tutorialstory['rooms']['great_hall']:
+            tutorial_player_location = tutorialstory['rooms']['hallway']
+            blocks = [
+                {
+                    "type": "header",
+                    "text": {
+                        "type": "plain_text",
+                        "text": tutorial_player_location['name'],
                     }
-                ]
-            }
-        ]
-        try:
-            client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
-            # client.chat_postMessage(blocks)
-        
-        except Exception as e:
-            print(f"Error sending DM: {e}")
-            respond("Sorry, I couldn't send you a direct message.")
-    else:
-        pass
+                },
+                {
+                    "type": "rich_text",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "type": "text",
+                                    "text": tutorial_player_location['description'],
+                                    # "style": {
+                                    #     "italic": true
+                                    # }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+            try:
+                client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
+                # client.chat_postMessage(blocks)
+            
+            except Exception as e:
+                print(f"Error sending DM: {e}")
+                respond("Sorry, I couldn't send you a direct message.")
+        else:
+            pass
 
 # Start your app
 if __name__ == "__main__":
