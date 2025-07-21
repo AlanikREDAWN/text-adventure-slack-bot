@@ -56,8 +56,9 @@ def start_adventure(ack, respond, command, client):
         client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
         
     except Exception as e:
-        print(f"Error sending DM: {e}")
+        # print(f"Error sending DM: {e}")
         respond("Sorry, I couldn't send you a direct message.")
+        respond(f"Error sending DM: {e}")
 
     # respond(f"Rooms: {tutorialstory['rooms']}")
     # respond(f"it works")
@@ -112,8 +113,9 @@ def go(ack, respond, command, client):
                 respond("You cannot move north")
 
         except Exception as e:
-                print(f"Error sending DM: {e}")
+                # print(f"Error sending DM: {e}")
                 respond("Sorry, I couldn't send you a direct message.")
+                respond(f"Error sending DM: {e}")
 
 
 if __name__ == "__main__":
