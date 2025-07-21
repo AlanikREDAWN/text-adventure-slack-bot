@@ -119,8 +119,9 @@ def go(ack, respond, command, client, say):
 
                 # print(f"Error sending DM: {e}")
                 # respond("Sorry, I couldn't send you a direct message.")
-                respond(response_message)
+                # respond(response_message)
                 # say(f"Error sending DM: {e}")
+                respond(f"{command['text']}")
 
 
 if __name__ == "__main__":
