@@ -19,7 +19,7 @@ global tutorial_player_location
 tutorial_player_location = tutorialstory['rooms']['great_hall']
 
 @app.command("/startadventure")
-def start_adventure(ack, respond, command, client):
+def start_adventure(ack, respond, command, client, say):
 
     ack()
     user_id = command["user_id"]
@@ -57,14 +57,14 @@ def start_adventure(ack, respond, command, client):
         
     except Exception as e:
         # print(f"Error sending DM: {e}")
-        # respond("Sorry, I couldn't send you a direct message.")
-        respond(f"Error sending DM: {e}")
+        respond("Sorry, I couldn't send you a direct message.")
+        say(f"Error sending DM: {e}")
 
     # respond(f"Rooms: {tutorialstory['rooms']}")
     # respond(f"it works")
 
 @app.command("/go")
-def go(ack, respond, command, client):
+def go(ack, respond, command, client, say):
     ack()
     user_text = command.get("text", "").strip().lower()
     # user_text = command["text"]
@@ -114,8 +114,8 @@ def go(ack, respond, command, client):
 
         except Exception as e:
                 # print(f"Error sending DM: {e}")
-                # respond("Sorry, I couldn't send you a direct message.")
-                respond(f"Error sending DM: {e}")
+                respond("Sorry, I couldn't send you a direct message.")
+                say(f"Error sending DM: {e}")
 
 
 if __name__ == "__main__":
