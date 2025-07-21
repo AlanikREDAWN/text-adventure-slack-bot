@@ -19,10 +19,9 @@ global tutorial_player_location
 tutorial_player_location = tutorialstory['rooms']['great_hall']
 
 @app.command("/startadventure")
-def start_adventure(ack, respond, command, client, say):
+def start_adventure(ack, respond, command, client, say, tutorial_player_location):
 
     ack()
-    global tutorial_player_location
     user_id = command["user_id"]
     message = f"Rooms: {tutorialstory['rooms']}"
     blocks = [
