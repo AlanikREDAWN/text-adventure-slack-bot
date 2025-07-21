@@ -41,9 +41,9 @@ def start_adventure(ack, respond, command, client):
 						{
 							"type": "text",
 							"text": tutorial_player_location['description'],
-							# "style": {
-							# 	"italic": true
-							# }
+							"style": {
+								"italic": true
+							}
 						}
 					]
 				}
@@ -95,9 +95,9 @@ def go(ack, respond, command, client):
                                     {
                                         "type": "text",
                                         "text": tutorial_player_location['description'],
-                                        # "style": {
-                                        #     "italic": true
-                                        # }
+                                        "style": {
+                                            "italic": true
+                                        }
                                     }
                                 ]
                             }
