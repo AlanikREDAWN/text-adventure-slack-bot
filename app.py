@@ -18,7 +18,10 @@ app = App(token=SLACK_BOT_TOKEN)
 with open('./stories/tutorial-story.yaml', 'r') as file:
     tutorialstory = yaml.safe_load(file)
 
+
+
 global tutorial_player_location
+tutorial_player_location = None
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
 
 @flask_app.route("/")
@@ -31,7 +34,7 @@ def run_flask():
 
 @app.command("/startadventure")
 def start_adventure(ack, respond, command, client, say):
-
+    global tutorial_player_location
     ack()
 
     tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -82,9 +85,10 @@ def start_adventure(ack, respond, command, client, say):
 
 @app.command("/go")
 def go(ack, respond, command, client, say, body, logger):
+    global tutorial_player_location
     ack()
     logger.info(body)
-    global tutorial_player_location
+    
 
     
     user_text = command.get("text", "").strip().lower()
@@ -163,7 +167,7 @@ def go(ack, respond, command, client, say, body, logger):
         # respond("test")
         try:
             if current_room == tutorialstory['rooms']['great_hall']:
-                tutorial_player_location == tutorialstory['rooms']['hallway']
+                tutorial_player_location = tutorialstory['rooms']['hallway']
 
                 send_room(tutorial_player_location)
             else:
