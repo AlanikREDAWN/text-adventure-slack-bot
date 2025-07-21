@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 import threading
 from flask import Flask
 flask_app = Flask(__name__)
+import logging
+logging.basicConfig(level=logging.INFO)
 # load_dotenv()
 
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
@@ -39,6 +41,7 @@ def start_adventure(ack, respond, command, client, say):
     # global tutorial_player_location
     ack()
     user_id = command["user_id"]
+    logging.info(f"/startadventure called by user_id: {user_id}")
     
     user_locations[user_id] = tutorialstory['rooms']['great_hall']
 
@@ -111,6 +114,8 @@ def go(ack, respond, command, client, say, body, logger):
     #     return
 
     current_room = user_locations[user_id]
+    logging.info(f"/go called by user_id: {user_id}")
+    logging.info(f"Current user_locations keys: {list(user_locations.keys())}")
 
     # blocks = [
     #     {
