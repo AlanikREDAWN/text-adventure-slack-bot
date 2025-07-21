@@ -119,9 +119,11 @@ def go(ack, respond, command, client, say):
         except Exception as e:
             response_message = f"Error sending DM: {e}"
 
-            # print(f"Error sending DM: {e}")
-            # respond("Sorry, I couldn't send you a direct message.")
             respond(response_message)
+
+            print(f"Error sending DM: {e}")
+            respond("Sorry, I couldn't send you a direct message.")
+            
             # say(f"Error sending DM: {e}")
             # respond(f"{command['text']}")
     elif "south" in user_text:
@@ -137,6 +139,9 @@ def go(ack, respond, command, client, say):
             response_message = f"Error sending DM: {e}"
 
             respond(response_message)
+
+            print(f"Error sending DM: {e}")
+            respond("Sorry, I couldn't send you a direct message.")
     elif "east" in user_text:
         try:
             if tutorial_player_location == tutorialstory['rooms']['hallway']:
@@ -154,6 +159,9 @@ def go(ack, respond, command, client, say):
             response_message = f"Error sending DM: {e}"
 
             respond(response_message)
+
+            print(f"Error sending DM: {e}")
+            respond("Sorry, I couldn't send you a direct message.")
     elif "west" in user_text:
         try:
             if tutorial_player_location == tutorialstory['rooms']['hallway']:
@@ -171,6 +179,9 @@ def go(ack, respond, command, client, say):
             response_message = f"Error sending DM: {e}"
 
             respond(response_message)
+
+            print(f"Error sending DM: {e}")
+            respond("Sorry, I couldn't send you a direct message.")
 
         
 
