@@ -113,8 +113,6 @@ def go(ack, respond, command, client):
         except Exception as e:
                 print(f"Error sending DM: {e}")
                 respond("Sorry, I couldn't send you a direct message.")
-        else:
-            pass
 
 
 if __name__ == "__main__":
