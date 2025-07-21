@@ -123,7 +123,44 @@ def go(ack, respond, command, client, say):
             respond(response_message)
             # say(f"Error sending DM: {e}")
             # respond(f"{command['text']}")
+    elif "south" in user_text:
+        blocks = [
+                    {
+                        "type": "header",
+                        "text": {
+                            "type": "plain_text",
+                            "text": tutorial_player_location['name'],
+                        }
+                    },
+                    {
+                        "type": "rich_text",
+                        "elements": [
+                            {
+                                "type": "rich_text_section",
+                                "elements": [
+                                    {
+                                        "type": "text",
+                                        "text": tutorial_player_location['description'],
+                                        "style": {
+                                            "italic": True
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+        try:
+            if tutorial_player_location == tutorialstory['rooms']['hallway']:
+                tutorial_player_location = tutorialstory['rooms']['great_hall']
 
+                client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
+            else:
+                respond("You cannot move south")
+        except Exception as e:
+            response_message = f"Error sending DM: {e}"
+
+            respond(response_message)
 
 if __name__ == "__main__":
     SocketModeHandler(app, SLACK_APP_TOKEN).start()
