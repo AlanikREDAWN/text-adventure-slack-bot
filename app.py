@@ -128,7 +128,7 @@ def go(ack, respond, command, client, say, body, logger):
     #     return
 
     current_room = user_locations[user_id]
-    items_in_room = current_room.get("items", [])
+    # items_in_room = current_room.get("items", [])
     logging.info(f"/go called by user_id: {user_id}")
     logging.info(f"Current user_locations keys: {list(user_locations.keys())}")
 
@@ -160,6 +160,7 @@ def go(ack, respond, command, client, say, body, logger):
     # ]
 
     def send_room(loc):
+        items_in_room = loc.get("items", [])
         if items_in_room:
             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
         else:
