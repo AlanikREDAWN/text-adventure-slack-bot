@@ -75,10 +75,7 @@ def go(ack, respond, command, client):
     elif "ping" in user_text:
         respond("pong!")
     elif "north" in user_text:
-        try:
-            if tutorial_player_location == tutorialstory['rooms']['great_hall']:
-                tutorial_player_location = tutorialstory['rooms']['hallway']
-                hallwayBlocks = [
+        blocks = [
                     {
                         "type": "header",
                         "text": {
@@ -104,8 +101,12 @@ def go(ack, respond, command, client):
                         ]
                     }
                 ]
+        try:
+            if tutorial_player_location == tutorialstory['rooms']['great_hall']:
+                tutorial_player_location = tutorialstory['rooms']['hallway']
+                
             
-                client.chat_postMessage(channel=user_id, text="test", blocks=hallwayBlocks)
+                client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
                 # client.chat_postMessage(blocks)
             else:
                 respond("You cannot move north")
