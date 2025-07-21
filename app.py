@@ -114,6 +114,6 @@ def go(ack, respond, command, client):
         else:
             pass
 
-# Start your app
+
 if __name__ == "__main__":
     SocketModeHandler(app, SLACK_APP_TOKEN).start()
