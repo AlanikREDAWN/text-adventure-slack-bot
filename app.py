@@ -46,6 +46,10 @@ def start_adventure(ack, respond, command, client, say):
     user_locations[user_id] = tutorialstory['rooms']['great_hall']
 
     current_location = user_locations[user_id]
+
+    items_in_room = current_location.get("items", [])
+    if items_in_room:
+             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
     
 
     # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -79,7 +83,14 @@ def start_adventure(ack, respond, command, client, say):
 					]
 				}
 			]
-		}
+		},
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*Items here:*\n{bullet_list}"
+            }
+        }
 	]
 
     try:
@@ -114,6 +125,7 @@ def go(ack, respond, command, client, say, body, logger):
     #     return
 
     current_room = user_locations[user_id]
+    items_in_room = current_room.get("items", [])
     logging.info(f"/go called by user_id: {user_id}")
     logging.info(f"Current user_locations keys: {list(user_locations.keys())}")
 
@@ -145,6 +157,8 @@ def go(ack, respond, command, client, say, body, logger):
     # ]
 
     def send_room(loc):
+        if items_in_room:
+             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
         blocks = [
             {
                 "type": "header",
@@ -169,6 +183,13 @@ def go(ack, respond, command, client, say, body, logger):
                         ]
                     }
                 ]
+            },
+            {
+            "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"*Items here:*\n{bullet_list}"
+                }
             }
         ]
         client.chat_postMessage(channel=user_id, text="You moved!", blocks=blocks)
@@ -308,7 +329,10 @@ def look(ack, respond, command, client, say, body, logger):
     if user_id not in user_locations:
         respond("You need to start the adventure first using `/startadventure`.")
         return
-    current_location = user_locations[user_id]
+    current_room = user_locations[user_id]
+    items_in_room = current_room.get("items", [])
+    if items_in_room:
+             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
 
     blocks = [
 		{
@@ -316,7 +340,7 @@ def look(ack, respond, command, client, say, body, logger):
 			"text": {
 				"type": "plain_text",
 				# "text": tutorial_player_location['name'],
-                "text": current_location['name'],
+                "text": current_room['name'],
 			}
 		},
 		{
@@ -328,7 +352,7 @@ def look(ack, respond, command, client, say, body, logger):
 						{
 							"type": "text",
 							# "text": tutorial_player_location['description'],
-                            "text": current_location['description'],
+                            "text": current_room['description'],
 							"style": {
 								"italic": True
 							}
@@ -336,7 +360,14 @@ def look(ack, respond, command, client, say, body, logger):
 					]
 				}
 			]
-		}
+		},
+        {
+        "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*Items here:*\n{bullet_list}"
+            }
+        }
 	]
      
     try:
