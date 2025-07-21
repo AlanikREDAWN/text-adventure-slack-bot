@@ -89,7 +89,7 @@ npcs:
     dialogue:
       wake:
         - "I see you've woken up."
-        - "Don't get scared — I'm just here to help you. In becoming the greatest wizard, you'll need all the help you can get."
+        - "Don't get scared — I'm just here to help you. In becoming the greatest knight, you'll need all the help you can get."
     interact_options:
       - option: "Where am I?"
         response: "You are in the Great Hall. It's the best place to start your adventure. There are many things to explore here."

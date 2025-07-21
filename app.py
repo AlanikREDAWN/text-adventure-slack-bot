@@ -300,7 +300,56 @@ def go(ack, respond, command, client, say, body, logger):
     else:
         respond("Please provide a direction to travel, such as `/go north`.")
 
+@app.command("/look")
+def look(ack, respond, command, client, say, body, logger):
+    ack()
+    user_id = command["user_id"]
+
+    if user_id not in user_locations:
+        respond("You need to start the adventure first using `/startadventure`.")
+        return
+    current_location = user_locations[user_id]
+
+    blocks = [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				# "text": tutorial_player_location['name'],
+                "text": current_location['name'],
+			}
+		},
+		{
+			"type": "rich_text",
+			"elements": [
+				{
+					"type": "rich_text_section",
+					"elements": [
+						{
+							"type": "text",
+							# "text": tutorial_player_location['description'],
+                            "text": current_location['description'],
+							"style": {
+								"italic": True
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+     
+    try:
+        # client.chat_postMessage(channel=user_id, text=message)
+        client.chat_postMessage(channel=user_id, text="Look", blocks=blocks)
         
+    except Exception as e:
+        # response_message = f"Error sending DM: {e}"
+        # print(f"Error sending DM: {e}")
+        # respond("Sorry, I couldn't send you a direct message.")
+        # say(f"Error sending DM: {e}")
+        # respond(response_message)
+        respond(f"Error sending DM: {e}")
 
 
 if __name__ == "__main__":
