@@ -74,31 +74,31 @@ def go(ack, respond, command, client, say, tutorial_player_location, body, logge
     user_id = command["user_id"]
 
     blocks = [
-                    {
-                        "type": "header",
-                        "text": {
-                            "type": "plain_text",
-                            "text": tutorial_player_location['name'],
-                        }
-                    },
-                    {
-                        "type": "rich_text",
-                        "elements": [
-                            {
-                                "type": "rich_text_section",
-                                "elements": [
-                                    {
-                                        "type": "text",
-                                        "text": tutorial_player_location['description'],
-                                        "style": {
-                                            "italic": True
-                                        }
-                                    }
-                                ]
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": tutorial_player_location['name'],
+            }
+        },
+        {
+            "type": "rich_text",
+            "elements": [
+                {
+                    "type": "rich_text_section",
+                    "elements": [
+                        {
+                            "type": "text",
+                            "text": tutorial_player_location['description'],
+                            "style": {
+                                "italic": True
                             }
-                        ]
-                    }
-                ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 
     if not user_text:
         respond("Please provide a direction to travel, such as `/go north`.")
