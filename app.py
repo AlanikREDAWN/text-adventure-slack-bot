@@ -3,6 +3,8 @@ import yaml
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from dotenv import load_dotenv
+import threading
+from flask import Flask
 # load_dotenv()
 
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
@@ -17,6 +19,14 @@ with open('./stories/tutorial-story.yaml', 'r') as file:
 
 global tutorial_player_location
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
+
+@flask_app.route("/")
+def home():
+    return "Slack bot running!"
+
+def run_flask():
+    port = int(os.environ.get("PORT", 3000))
+    flask_app.run(host="0.0.0.0", port=port)
 
 @app.command("/startadventure")
 def start_adventure(ack, respond, command, client, say):
@@ -262,4 +272,7 @@ def go(ack, respond, command, client, say, body, logger):
 
 
 if __name__ == "__main__":
-    SocketModeHandler(app, SLACK_APP_TOKEN).start()
+    # SocketModeHandler(app, SLACK_APP_TOKEN).start()
+    threading.Thread(target=run_flask).start()
+    handler = SocketModeHandler(app, app_token=os.environ.get("SLACK_APP_TOKEN"))
+    handler.start()

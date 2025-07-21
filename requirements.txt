@@ -2,3 +2,4 @@ slack_bolt
 gunicorn
 dotenv
 PyYAML
+flask
