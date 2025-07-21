@@ -107,7 +107,9 @@ def go(ack, respond, command, client):
             
                 client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
                 # client.chat_postMessage(blocks)
-            
+            else:
+                respond("You cannot move north")
+
         except Exception as e:
                 print(f"Error sending DM: {e}")
                 respond("Sorry, I couldn't send you a direct message.")
