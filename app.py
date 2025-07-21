@@ -22,6 +22,7 @@ tutorial_player_location = tutorialstory['rooms']['great_hall']
 def start_adventure(ack, respond, command, client, say):
 
     ack()
+    global tutorial_player_location
     user_id = command["user_id"]
     message = f"Rooms: {tutorialstory['rooms']}"
     blocks = [
