@@ -57,7 +57,7 @@ def start_adventure(ack, respond, command, client):
         
     except Exception as e:
         # print(f"Error sending DM: {e}")
-        respond("Sorry, I couldn't send you a direct message.")
+        # respond("Sorry, I couldn't send you a direct message.")
         respond(f"Error sending DM: {e}")
 
     # respond(f"Rooms: {tutorialstory['rooms']}")
@@ -114,7 +114,7 @@ def go(ack, respond, command, client):
 
         except Exception as e:
                 # print(f"Error sending DM: {e}")
-                respond("Sorry, I couldn't send you a direct message.")
+                # respond("Sorry, I couldn't send you a direct message.")
                 respond(f"Error sending DM: {e}")
 
 
