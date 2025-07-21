@@ -72,14 +72,7 @@ def go(ack, respond, command, client, say):
     # user_text = command["text"]
     user_id = command["user_id"]
 
-    if not user_text:
-        respond("Please provide a direction to travel, such as `/go north`.")
-        return
-    elif "ping" in user_text:
-        respond("pong!")
-    elif "north" in user_text:
-        # respond("test")
-        blocks = [
+    blocks = [
                     {
                         "type": "header",
                         "text": {
@@ -105,6 +98,14 @@ def go(ack, respond, command, client, say):
                         ]
                     }
                 ]
+
+    if not user_text:
+        respond("Please provide a direction to travel, such as `/go north`.")
+        return
+    elif "ping" in user_text:
+        respond("pong!")
+    elif "north" in user_text:
+        # respond("test")
         try:
             if tutorial_player_location == tutorialstory['rooms']['great_hall']:
                 tutorial_player_location = tutorialstory['rooms']['hallway']
@@ -124,32 +125,6 @@ def go(ack, respond, command, client, say):
             # say(f"Error sending DM: {e}")
             # respond(f"{command['text']}")
     elif "south" in user_text:
-        blocks = [
-                    {
-                        "type": "header",
-                        "text": {
-                            "type": "plain_text",
-                            "text": tutorial_player_location['name'],
-                        }
-                    },
-                    {
-                        "type": "rich_text",
-                        "elements": [
-                            {
-                                "type": "rich_text_section",
-                                "elements": [
-                                    {
-                                        "type": "text",
-                                        "text": tutorial_player_location['description'],
-                                        "style": {
-                                            "italic": True
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
         try:
             if tutorial_player_location == tutorialstory['rooms']['hallway']:
                 tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -163,6 +138,24 @@ def go(ack, respond, command, client, say):
 
             respond(response_message)
     elif "east" in user_text:
+        try:
+            if tutorial_player_location == tutorialstory['rooms']['hallway']:
+                tutorial_player_location = tutorialstory['rooms']['training_room']
+
+                client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
+    
+            elif tutorial_player_location == tutorialstory['rooms']['ballroom']:
+                tutorial_player_location = tutorialstory['rooms']['hallway']
+
+                client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
+            else:
+                client.chat_postMessage(channel=user_id, text="You cannot move east")
+        except Exception as e:
+            response_message = f"Error sending DM: {e}"
+
+            respond(response_message)
+
+        
 
 
 if __name__ == "__main__":
