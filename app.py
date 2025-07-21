@@ -115,13 +115,13 @@ def go(ack, respond, command, client, say):
                 respond("You cannot move north")
 
         except Exception as e:
-                response_message = f"Error sending DM: {e}"
+            response_message = f"Error sending DM: {e}"
 
-                # print(f"Error sending DM: {e}")
-                # respond("Sorry, I couldn't send you a direct message.")
-                # respond(response_message)
-                # say(f"Error sending DM: {e}")
-                respond(f"{command['text']}")
+            # print(f"Error sending DM: {e}")
+            # respond("Sorry, I couldn't send you a direct message.")
+            # respond(response_message)
+            # say(f"Error sending DM: {e}")
+            respond(f"{command['text']}")
 
 
 if __name__ == "__main__":
