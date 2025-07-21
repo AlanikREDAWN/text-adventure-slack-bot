@@ -78,6 +78,7 @@ def go(ack, respond, command, client, say):
     elif "ping" in user_text:
         respond("pong!")
     elif "north" in user_text:
+        respond("test")
         blocks = [
                     {
                         "type": "header",
