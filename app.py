@@ -22,6 +22,8 @@ with open('./stories/tutorial-story.yaml', 'r') as file:
 
 global tutorial_player_location
 tutorial_player_location = None
+user_locations = {}
+
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
 
 @flask_app.route("/")
@@ -34,20 +36,27 @@ def run_flask():
 
 @app.command("/startadventure")
 def start_adventure(ack, respond, command, client, say):
-    global tutorial_player_location
+    # global tutorial_player_location
     ack()
-
-    tutorial_player_location = tutorialstory['rooms']['great_hall']
-    current_room = tutorial_player_location
-    # current_room = tutorial_player_location
     user_id = command["user_id"]
-    message = f"Rooms: {tutorialstory['rooms']}"
+    
+    user_locations[user_id] = tutorialstory['rooms']['great_hall']
+
+    current_location = user_locations[user_id]
+    
+
+    # tutorial_player_location = tutorialstory['rooms']['great_hall']
+    # current_room = tutorial_player_location
+    # current_room = tutorial_player_location
+    
+    # message = f"Rooms: {tutorialstory['rooms']}"
     blocks = [
 		{
 			"type": "header",
 			"text": {
 				"type": "plain_text",
-				"text": tutorial_player_location['name'],
+				# "text": tutorial_player_location['name'],
+                "text": current_location['name'],
 			}
 		},
 		{
@@ -58,7 +67,8 @@ def start_adventure(ack, respond, command, client, say):
 					"elements": [
 						{
 							"type": "text",
-							"text": tutorial_player_location['description'],
+							# "text": tutorial_player_location['description'],
+                            "text": current_location['description'],
 							"style": {
 								"italic": True
 							}
@@ -74,32 +84,33 @@ def start_adventure(ack, respond, command, client, say):
         client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
         
     except Exception as e:
-        response_message = f"Error sending DM: {e}"
+        # response_message = f"Error sending DM: {e}"
         # print(f"Error sending DM: {e}")
         # respond("Sorry, I couldn't send you a direct message.")
         # say(f"Error sending DM: {e}")
-        respond(response_message)
+        # respond(response_message)
+        respond(f"Error sending DM: {e}")
 
     # respond(f"Rooms: {tutorialstory['rooms']}")
     # respond(f"it works")
 
 @app.command("/go")
 def go(ack, respond, command, client, say, body, logger):
-    global tutorial_player_location
+    # global tutorial_player_location
     ack()
-    logger.info(body)
-    
-
-    
-    user_text = command.get("text", "").strip().lower()
-    # user_text = command["text"]
+    # logger.info(body)
     user_id = command["user_id"]
-
-    if tutorial_player_location is None:
+    user_text = command.get("text", "").strip().lower()
+    
+    if user_id not in user_locations:
         respond("You need to start the adventure first using `/startadventure`.")
         return
 
-    current_room = tutorial_player_location
+    # if tutorial_player_location is None:
+    #     respond("You need to start the adventure first using `/startadventure`.")
+    #     return
+
+    current_room = user_locations[user_id]
 
     # blocks = [
     #     {
@@ -165,11 +176,12 @@ def go(ack, respond, command, client, say, body, logger):
         respond("pong!")
     elif "north" in user_text:
         # respond("test")
-        try:
+        # try:
             if current_room == tutorialstory['rooms']['great_hall']:
-                tutorial_player_location = tutorialstory['rooms']['hallway']
-
-                send_room(tutorial_player_location)
+                # tutorial_player_location = tutorialstory['rooms']['hallway']
+                user_locations[user_id] = tutorialstory['rooms']['hallway']
+                send_room(user_locations[user_id])
+                # send_room(tutorial_player_location)
             else:
                 respond("You can't go north from here!")
             # if tutorial_player_location == tutorialstory['rooms']['great_hall']:
@@ -181,21 +193,23 @@ def go(ack, respond, command, client, say, body, logger):
             # else:
             #     respond("You cannot move north")
 
-        except Exception as e:
-            response_message = f"Error sending DM: {e}"
+        # except Exception as e:
+        #     response_message = f"Error sending DM: {e}"
 
             # respond(response_message)
 
-            print(f"Error sending DM: {e}")
-            respond("Sorry, I couldn't send you a direct message.")
+            # print(f"Error sending DM: {e}")
+            # respond("Sorry, I couldn't send you a direct message.")
             
             # say(f"Error sending DM: {e}")
             # respond(f"{command['text']}")
     elif "south" in user_text:
-        try:
+        # try:
             if current_room == tutorialstory['rooms']['hallway']:
-                tutorial_player_location = tutorialstory['rooms']['great_hall']
-                send_room(tutorial_player_location)
+                # tutorial_player_location = tutorialstory['rooms']['great_hall']
+                # send_room(tutorial_player_location)
+                user_locations[user_id]= tutorialstory['rooms']['great_hall']
+                send_room(user_locations[user_id])
             else:
                 respond("You can't go south from here!")
             # if tutorial_player_location == tutorialstory['rooms']['hallway']:
@@ -205,21 +219,25 @@ def go(ack, respond, command, client, say, body, logger):
             # else:
             #     # respond("You cannot move south")
             #     client.chat_postMessage(channel=user_id, text="You cannot move south")
-        except Exception as e:
-            response_message = f"Error sending DM: {e}"
+        # except Exception as e:
+        #     response_message = f"Error sending DM: {e}"
 
-            # respond(response_message)
+        #     # respond(response_message)
 
-            print(f"Error sending DM: {e}")
-            respond("Sorry, I couldn't send you a direct message.")
+        #     print(f"Error sending DM: {e}")
+        #     respond("Sorry, I couldn't send you a direct message.")
     elif "east" in user_text:
-        try:
+        # try:
             if current_room == tutorialstory['rooms']['hallway']:
-                tutorial_player_location = tutorialstory['rooms']['training_room']
-                send_room(tutorial_player_location)
+                user_locations[user_id] = tutorialstory['rooms']['training_room']
+                send_room(user_locations[user_id])
+                # tutorial_player_location = tutorialstory['rooms']['training_room']
+                # send_room(tutorial_player_location)
             elif current_room == tutorialstory['rooms']['ballroom']:
-                tutorial_player_location = tutorialstory['rooms']['hallway']
-                send_room(tutorial_player_location)
+                # tutorial_player_location = tutorialstory['rooms']['hallway']
+                # send_room(tutorial_player_location)
+                user_locations[user_id] = tutorialstory['rooms']['hallway']
+                send_room(user_locations[user_id])
             else:
                 respond("You can't go east from here!")
 
@@ -235,21 +253,25 @@ def go(ack, respond, command, client, say, body, logger):
             # else:
             #     client.chat_postMessage(channel=user_id, text="You cannot move east")
 
-        except Exception as e:
-            response_message = f"Error sending DM: {e}"
+        # except Exception as e:
+        #     response_message = f"Error sending DM: {e}"
 
-            # respond(response_message)
+        #     # respond(response_message)
 
-            print(f"Error sending DM: {e}")
-            respond("Sorry, I couldn't send you a direct message.")
+        #     print(f"Error sending DM: {e}")
+        #     respond("Sorry, I couldn't send you a direct message.")
     elif "west" in user_text:
-        try:
+        # try:
             if current_room == tutorialstory['rooms']['hallway']:
-                tutorial_player_location = tutorialstory['rooms']['ballroom']
-                send_room(tutorial_player_location)
+                # tutorial_player_location = tutorialstory['rooms']['ballroom']
+                # send_room(tutorial_player_location)
+                user_locations[user_id] = tutorialstory['rooms']['ballroom']
+                send_room(user_locations[user_id])
             elif current_room == tutorialstory['rooms']['training_room']:
-                tutorial_player_location = tutorialstory['rooms']['hallway']
-                send_room(tutorial_player_location)
+                 user_locations[user_id] = tutorialstory['rooms']['hallway']
+                 send_room(user_locations[user_id])
+                # tutorial_player_location = tutorialstory['rooms']['hallway']
+                # send_room(tutorial_player_location)
             else:
                 respond("You can't go west from here!")
             # if tutorial_player_location == tutorialstory['rooms']['hallway']:
@@ -263,13 +285,13 @@ def go(ack, respond, command, client, say, body, logger):
             #     client.chat_postMessage(channel=user_id, text="test", blocks="blocks")
             # else:
             #     client.chat_postMessage(channel=user_id, text="You cannot move west")
-        except Exception as e:
-            response_message = f"Error sending DM: {e}"
+        # except Exception as e:
+        #     response_message = f"Error sending DM: {e}"
 
-            # respond(response_message)
+        #     # respond(response_message)
 
-            print(f"Error sending DM: {e}")
-            respond("Sorry, I couldn't send you a direct message.")
+        #     print(f"Error sending DM: {e}")
+        #     respond("Sorry, I couldn't send you a direct message.")
     else:
         respond("Please provide a direction to travel, such as `/go north`.")
 
