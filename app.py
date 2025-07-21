@@ -53,6 +53,11 @@ def start_adventure(ack, respond, command, client, say):
         bullet_list = "\n".join(f"• {item}" for item in items_in_room)
     else:
         bullet_list = "Nothing interesting here."
+    npcs_in_room = current_room.get("npcs", [])
+    if npcs_in_room:
+        npc_list = "\n".join(f"• {npc}" for npc in npcs_in_room)
+    else:
+        npc_list = "No one else here."
     
 
     # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -92,6 +97,13 @@ def start_adventure(ack, respond, command, client, say):
             "text": {
                 "type": "mrkdwn",
                 "text": f"*Items here:*\n{bullet_list}"
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*NPCs here:*\n{npc_list}"
             }
         }
 	]
@@ -165,6 +177,12 @@ def go(ack, respond, command, client, say, body, logger):
             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
         else:
             bullet_list = "Nothing interesting here."
+        
+        npcs_in_room = loc.get("npcs", [])
+        if npcs_in_room:
+            npc_list = "\n".join(f"• {npc}" for npc in npcs_in_room)
+        else:
+            npc_list = "No one else here."
         blocks = [
             {
                 "type": "header",
@@ -195,6 +213,13 @@ def go(ack, respond, command, client, say, body, logger):
                 "text": {
                     "type": "mrkdwn",
                     "text": f"*Items here:*\n{bullet_list}"
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"*NPCs here:*\n{npc_list}"
                 }
             }
         ]
@@ -341,6 +366,12 @@ def look(ack, respond, command, client, say, body, logger):
         bullet_list = "\n".join(f"• {item}" for item in items_in_room)
     else:
         bullet_list = "Nothing interesting here."
+    
+    npcs_in_room = current_room.get("npcs", [])
+    if npcs_in_room:
+        npc_list = "\n".join(f"• {npc}" for npc in npcs_in_room)
+    else:
+        npc_list = "No one else here."
 
     blocks = [
 		{
@@ -374,6 +405,13 @@ def look(ack, respond, command, client, say, body, logger):
             "text": {
                 "type": "mrkdwn",
                 "text": f"*Items here:*\n{bullet_list}"
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*NPCs here:*\n{npc_list}"
             }
         }
 	]
