@@ -49,7 +49,9 @@ def start_adventure(ack, respond, command, client, say):
 
     items_in_room = current_location.get("items", [])
     if items_in_room:
-             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
+        bullet_list = "\n".join(f"• {item}" for item in items_in_room)
+    else:
+        bullet_list = "Nothing interesting here."
     
 
     # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -158,7 +160,9 @@ def go(ack, respond, command, client, say, body, logger):
 
     def send_room(loc):
         if items_in_room:
-             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
+            bullet_list = "\n".join(f"• {item}" for item in items_in_room)
+        else:
+            bullet_list = "Nothing interesting here."
         blocks = [
             {
                 "type": "header",
@@ -332,7 +336,9 @@ def look(ack, respond, command, client, say, body, logger):
     current_room = user_locations[user_id]
     items_in_room = current_room.get("items", [])
     if items_in_room:
-             bullet_list = "\n".join(f"• {item}" for item in items_in_room)
+        bullet_list = "\n".join(f"• {item}" for item in items_in_room)
+    else:
+        bullet_list = "Nothing interesting here."
 
     blocks = [
 		{
