@@ -156,11 +156,14 @@ def go(ack, respond, command, client, say):
 
                 client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
             else:
-                respond("You cannot move south")
+                # respond("You cannot move south")
+                client.chat_postMessage(channel=user_id, text="You cannot move south")
         except Exception as e:
             response_message = f"Error sending DM: {e}"
 
             respond(response_message)
+    elif "east" in user_text:
+
 
 if __name__ == "__main__":
     SocketModeHandler(app, SLACK_APP_TOKEN).start()
