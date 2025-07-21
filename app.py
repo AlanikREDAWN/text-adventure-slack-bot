@@ -154,6 +154,23 @@ def go(ack, respond, command, client, say):
             response_message = f"Error sending DM: {e}"
 
             respond(response_message)
+    elif "west" in user_text:
+        try:
+            if tutorial_player_location == tutorialstory['rooms']['hallway']:
+                tutorial_player_location = tutorialstory['rooms']['ballroom']
+
+                client.chat_postMessage(channel=user_id, text="test", blocks=blocks)
+
+            elif tutorial_player_location == tutorialstory['rooms']['training_room']:
+                tutorial_player_location = tutorialstory['rooms']['hallway']
+
+                client.chat_postMessage(channel=user_id, text="test", blocks="blocks")
+            else:
+                client.chat_postMessage(channel=user_id, text="You cannot move west")
+        except Exception as e:
+            response_message = f"Error sending DM: {e}"
+
+            respond(response_message)
 
         
 
