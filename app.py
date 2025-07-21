@@ -47,7 +47,8 @@ def start_adventure(ack, respond, command, client, say):
 
     current_location = user_locations[user_id]
 
-    items_in_room = current_location.get("items", [])
+    current_room = user_locations[user_id]
+    items_in_room = current_room.get("items", [])
     if items_in_room:
         bullet_list = "\n".join(f"• {item}" for item in items_in_room)
     else:
