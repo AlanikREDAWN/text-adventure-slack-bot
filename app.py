@@ -119,7 +119,7 @@ def go(ack, respond, command, client, say):
         except Exception as e:
             response_message = f"Error sending DM: {e}"
 
-            respond(response_message)
+            # respond(response_message)
 
             print(f"Error sending DM: {e}")
             respond("Sorry, I couldn't send you a direct message.")
@@ -138,7 +138,7 @@ def go(ack, respond, command, client, say):
         except Exception as e:
             response_message = f"Error sending DM: {e}"
 
-            respond(response_message)
+            # respond(response_message)
 
             print(f"Error sending DM: {e}")
             respond("Sorry, I couldn't send you a direct message.")
@@ -158,7 +158,7 @@ def go(ack, respond, command, client, say):
         except Exception as e:
             response_message = f"Error sending DM: {e}"
 
-            respond(response_message)
+            # respond(response_message)
 
             print(f"Error sending DM: {e}")
             respond("Sorry, I couldn't send you a direct message.")
@@ -178,7 +178,7 @@ def go(ack, respond, command, client, say):
         except Exception as e:
             response_message = f"Error sending DM: {e}"
 
-            respond(response_message)
+            # respond(response_message)
 
             print(f"Error sending DM: {e}")
             respond("Sorry, I couldn't send you a direct message.")
