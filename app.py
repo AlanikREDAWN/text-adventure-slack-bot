@@ -66,7 +66,7 @@ def start_adventure(ack, respond, command, client, say, tutorial_player_location
     # respond(f"it works")
 
 @app.command("/go")
-def go(ack, respond, command, client, say):
+def go(ack, respond, command, client, say, tutorial_player_location):
     ack()
     user_text = command.get("text", "").strip().lower()
     # user_text = command["text"]
