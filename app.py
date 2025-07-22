@@ -25,7 +25,8 @@ with open('./stories/tutorial-story.yaml', 'r') as file:
 global tutorial_player_location
 tutorial_player_location = None
 user_locations = {}
-current_adventure = None
+current_adventure = {}
+
 
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
 
