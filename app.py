@@ -7,6 +7,7 @@ import threading
 from flask import Flask
 flask_app = Flask(__name__)
 import logging
+import re
 logging.basicConfig(level=logging.INFO)
 # load_dotenv()
 
@@ -26,6 +27,7 @@ global tutorial_player_location
 tutorial_player_location = None
 user_locations = {}
 current_adventure = {}
+waiting_for_response_glykoy = {}
 
 
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -510,6 +512,7 @@ def talkto(ack, respond, command, client, say, body, logger):
     ack()
 
     user_id = command["user_id"]
+    channel_id = command["channel_id"]
     if current_adventure[user_id] == "tutorial":
         user_text = command.get("text", "").strip().lower()
         
@@ -524,9 +527,25 @@ def talkto(ack, respond, command, client, say, body, logger):
             if current_room == tutorialstory['rooms']['great_hall']:
                 client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['dialogue']['wake'][0]}")
                 client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['dialogue']['wake'][1]}")
-                client.chat_postMessage(channel=user_id, text=f"*Interact Options:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['option']}")
+                client.chat_postMessage(channel=user_id, text=f"*Interact Options:* '{tutorialstory['npcs']['glykoy']['interact_options'][0]['option']}', '{tutorialstory['npcs']['glykoy']['interact_options'][1]['option']}'")
+
+                waiting_for_response_glykoy[user_id] = channel_id
     else:
         respond("Error")
+
+@app.message(re.compile(".*"))
+def handle_message(message, client, logger):
+    user_id = message["user"]
+    channel_id = message["channel"]
+    text = message["text"]
+
+    if user_id in waiting_for_response_glykoy and waiting_for_response_glykoy[user_id] == channel_id:
+        del waiting_for_response_glykoy[user_id]
+
+        if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
+            client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
+        else:
+            pass
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
