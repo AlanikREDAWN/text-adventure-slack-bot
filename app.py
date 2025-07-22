@@ -92,6 +92,21 @@ def start_adventure(ack, respond, command, client, say):
 def start_adventure_tutorial(ack, respond, command, client, say, body):
     # global tutorial_player_location
     ack()
+    channel_id = body["channel"]["id"]
+    message_ts = body["message"]["ts"]
+    updated_blocks = []
+    for block in body["message"]["blocks"]:
+        if block.get("type") == "actions" and any(
+            element.get("action_id") == "your_button_action_id"
+            for element in block.get("elements", [])
+        ):
+            continue  
+        updated_blocks.append(block)
+    client.chat_update(
+        channel=channel_id,
+        ts=message_ts,
+        blocks=updated_blocks
+    )
     user_id = body["user"]["id"]
     logging.info(f"/startadventure called by user_id: {user_id}")
     current_adventure[user_id] = "tutorial"
