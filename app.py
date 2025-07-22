@@ -490,23 +490,26 @@ def look(ack, respond, command, client, say, body, logger):
     else:
         respond("Error")
 
-# @app.command("/talkto")
-# def talkto(ack, respond, command, client, say, body, logger):
-#     ack()
+@app.command("/talkto")
+def talkto(ack, respond, command, client, say, body, logger):
+    ack()
 
-#     user_id = command["user_id"]
-#     user_text = command.get("text", "").strip().lower()
-    
-#     if user_id not in user_locations:
-#         respond("You need to start the adventure first using `/startadventure`.")
-#         return
+    user_id = command["user_id"]
+    if current_adventure[user_id] == "tutorial":
+        user_text = command.get("text", "").strip().lower()
+        
+        if user_id not in user_locations:
+            respond("You need to start the adventure first using `/startadventure`.")
+            return
 
-#     current_room = user_locations[user_id]
+        current_room = user_locations[user_id]
 
 
-#     if "glykoy" in user_text:
-#         if current_room == tutorialstory['rooms']['great_hall']:
-#             client.chat_postMessage(channel=user_id, text="Look", blocks=blocks)
+        if "glykoy" in user_text:
+            if current_room == tutorialstory['rooms']['great_hall']:
+                client.chat_postMessage(channel=user_id, text="*test*")
+    else:
+        respond("Error")
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
