@@ -533,7 +533,7 @@ def talkto(ack, respond, command, client, say, body, logger):
     else:
         respond("Error")
 
-@app.message(re.compile(".*"))
+@app.message("")
 def handle_message(message, client, logger, respond):
     user_id = message["user"]
     channel_id = message["channel"]
