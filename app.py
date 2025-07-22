@@ -88,10 +88,10 @@ def start_adventure(ack, respond, command, client, say):
 
 
 @app.action("start_adventure_tutorial")
-def start_adventure_tutorial(ack, respond, command, client, say):
+def start_adventure_tutorial(ack, respond, command, client, say, body):
     # global tutorial_player_location
     ack()
-    user_id = command["user_id"]
+    user_id = body["user"]["id"]
     logging.info(f"/startadventure called by user_id: {user_id}")
     current_adventure[user_id] = "tutorial"
     
