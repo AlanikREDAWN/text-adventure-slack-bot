@@ -182,7 +182,7 @@ def go(ack, respond, command, client, say, body, logger):
     ack()
     # logger.info(body)
 
-    if current_adventure == "tutorial":
+    if current_adventure[user_id] == "tutorial":
         user_id = command["user_id"]
         user_text = command.get("text", "").strip().lower()
         
@@ -412,7 +412,7 @@ def go(ack, respond, command, client, say, body, logger):
 @app.command("/look")
 def look(ack, respond, command, client, say, body, logger):
     ack()
-    if current_adventure == "tutorial":
+    if current_adventure[user_id] == "tutorial":
         user_id = command["user_id"]
 
         if user_id not in user_locations:
