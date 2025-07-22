@@ -509,7 +509,7 @@ def talkto(ack, respond, command, client, say, body, logger):
             if current_room == tutorialstory['rooms']['great_hall']:
                 client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['dialogue']['wake'][0]}")
                 client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['dialogue']['wake'][1]}")
-                client.chat_postMessage(channel=user_id, text=f"*Interact Options:* {tutorialstory['npcs']['glykoy']['interact_options'][0]}")
+                client.chat_postMessage(channel=user_id, text=f"*Interact Options:* {tutorialstory['npcs']['glykoy']['interact_options'][0][1]}")
     else:
         respond("Error")
 
