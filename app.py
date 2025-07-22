@@ -182,8 +182,9 @@ def go(ack, respond, command, client, say, body, logger):
     ack()
     # logger.info(body)
 
+    user_id = command["user_id"]
     if current_adventure[user_id] == "tutorial":
-        user_id = command["user_id"]
+        
         user_text = command.get("text", "").strip().lower()
         
         if user_id not in user_locations:
@@ -412,8 +413,9 @@ def go(ack, respond, command, client, say, body, logger):
 @app.command("/look")
 def look(ack, respond, command, client, say, body, logger):
     ack()
+    user_id = command["user_id"]
     if current_adventure[user_id] == "tutorial":
-        user_id = command["user_id"]
+        
 
         if user_id not in user_locations:
             respond("You need to start the adventure first using `/startadventure`.")
