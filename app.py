@@ -534,7 +534,7 @@ def talkto(ack, respond, command, client, say, body, logger):
         respond("Error")
 
 @app.message(re.compile(".*"))
-def handle_message(message, client, logger):
+def handle_message(message, client, logger, respond):
     user_id = message["user"]
     channel_id = message["channel"]
     text = message["text"]
@@ -545,7 +545,7 @@ def handle_message(message, client, logger):
         if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
             client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
         else:
-            pass
+            respond("nope")
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
