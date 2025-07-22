@@ -97,7 +97,7 @@ def start_adventure_tutorial(ack, respond, command, client, say, body):
     updated_blocks = []
     for block in body["message"]["blocks"]:
         if block.get("type") == "actions" and any(
-            element.get("action_id") == "your_button_action_id"
+            element.get("action_id") == "start_adventure_tutorial"
             for element in block.get("elements", [])
         ):
             continue  
