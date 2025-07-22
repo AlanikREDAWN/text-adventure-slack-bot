@@ -65,7 +65,7 @@ def start_adventure(ack, respond, command, client, say):
 					"text": {
 						"type": "plain_text",
 						"text": "Tutorial Adventure",
-						"emoji": true
+						"emoji": True
 					},
 					"value": "Tutorial Adventure",
 					"action_id": "start_adventure_tutorial"
