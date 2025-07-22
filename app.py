@@ -534,11 +534,12 @@ def talkto(ack, respond, command, client, say, body, logger):
         respond("Error")
 
 @app.message("")
-def handle_message(message, client, logger, respond):
+def handle_message(message, client, logger, respond, say):
     user_id = message["user"]
     channel_id = message["channel"]
-    text = message["text"]
-    respond("testing")
+    text = message.get("text", "").lower()
+    # respond("testing")
+    say(f"Echo: You said '{text}'")
 
     # if user_id in waiting_for_response_glykoy and waiting_for_response_glykoy[user_id] == channel_id:
     #     del waiting_for_response_glykoy[user_id]
