@@ -57,10 +57,10 @@ def check_tutorial_conditions(user_id):
 
 def background_checker(channel_id):
     while True:
-        logging.info("checking...")
+        print("checking...")
         for user_id in set(visited_hallway.keys()):
-            logging.info(f"Checking user: {user_id}")
-            logging.info("Conditions:",
+            print(f"Checking user: {user_id}")
+            print("Conditions:",
                          visited_hallway.get(user_id),
                          visited_training_room.get(user_id),
                          visited_ballroom.get(user_id),
