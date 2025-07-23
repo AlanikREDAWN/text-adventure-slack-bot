@@ -29,6 +29,7 @@ tutorial_player_location = None
 user_locations = {}
 current_adventure = {}
 waiting_for_response_glykoy = {}
+great_hammer = {}
 
 
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -580,6 +581,7 @@ def pickup(ack, respond, command, client, say, body, logger):
         if "great hammer" in user_text:
             if current_room == tutorialstory['rooms']['great_hall']:
                 client.chat_postMessage(channel=user_id, text=f"You have picked up the *Great Hammer*")
+                great_hammer[user_id] = True
             else:
                 client.chat_postMessage(channel=user_id, text="The *Great Hammer* is not in this room")
         else:
@@ -587,6 +589,33 @@ def pickup(ack, respond, command, client, say, body, logger):
     else:
         respond("Error")
 
+@app.command("/attack")
+def attack(ack, respond, command, client, say, body, logger):
+    ack()
+
+    user_id = command["user_id"]
+    channel_id = command["channel_id"]
+    if current_adventure[user_id] == "tutorial":
+        user_text = command.get("text", "").strip().lower()
+        
+        if user_id not in user_locations:
+            respond("You need to start the adventure first using `/startadventure`.")
+            return
+
+        current_room = user_locations[user_id]
+
+        if "training dummy" in user_text or "dummy" in user_text:
+            if current_room == tutorialstory['rooms']['training_room']:
+                if great_hammer[user_id] == True:
+                    client.chat_postMessage(channel=user_id, text=f"{tutorialstory['npcs']['dummy']['interact_options'][0]['response']}")
+                else:
+                    client.chat_postMessage(channel=user_id, text="What on earth are you planning on attacking with? Find a weapon first")
+            else:
+                client.chat_postMessage(channel=user_id, text="The *dummy* is not in this room, dummy")
+        else:
+            client.chat_postMessage(channel=user_id, text="Please enter a valid item to attack")
+    else:
+        respond("Error")
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
