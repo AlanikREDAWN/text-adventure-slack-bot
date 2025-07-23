@@ -617,6 +617,60 @@ def attack(ack, respond, command, client, say, body, logger):
     else:
         respond("Error")
 
+@app.command("/inventory")
+def attack(ack, respond, command, client, say, body, logger):
+    ack()
+
+    user_id = command["user_id"]
+    channel_id = command["channel_id"]
+    if current_adventure[user_id] == "tutorial":
+        user_text = command.get("text", "").strip().lower()
+        
+        if user_id not in user_locations:
+            respond("You need to start the adventure first using `/startadventure`.")
+            return
+
+        current_room = user_locations[user_id]
+
+        if user_id in great_hammer and great_hammer[user_id] == True:
+            inventoryBlocks = [
+                {
+                    "type": "header",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Inventory"
+                    }
+                },
+                {
+                    "type": "rich_text",
+                    "elements": [
+                        {
+                            "type": "rich_text_list",
+                            "style": "bullet",
+                            "indent": 0,
+                            "border": 0,
+                            "elements": [
+                                {
+                                    "type": "rich_text_section",
+                                    "elements": [
+                                        {
+                                            "type": "text",
+                                            "text": "Great Hammer"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+            
+            client.chat_postMessage(channel=user_id, text="Inventory", blocks=inventoryBlocks)
+        else:
+            client.chat_postMessage(channel=user_id, text="Your inventory is empty")
+    else:
+        respond("Error")
+
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
     threading.Thread(target=run_flask).start()
