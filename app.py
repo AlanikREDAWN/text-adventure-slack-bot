@@ -42,6 +42,8 @@ hit_dummy = {}
 
 notified_users = set()
 
+
+
 def check_tutorial_conditions(user_id):
     return (
         visited_hallway.get(user_id) and
@@ -54,7 +56,16 @@ def check_tutorial_conditions(user_id):
 
 def background_checker(channel_id, client):
     while True:
+        logging.info("checking...")
         for user_id in set(visited_hallway.keys()):
+            logging.info(f"Checking user: {user_id}")
+            logging.info("Conditions:",
+                         visited_hallway.get(user_id),
+                         visited_training_room.get(user_id),
+                         visited_ballroom.get(user_id),
+                         talked_to_glykoy_1.get(user_id),
+                         talked_to_glykoy_2.get(user_id),
+                         hit_dummy.get(user_id))
             if user_id in notified_users:
                 continue
             if check_tutorial_conditions(user_id):
