@@ -550,7 +550,7 @@ def handle_message(message, client, logger, respond, say):
         else:
             respond("nope")
     else:
-        pass
+        respond("hi")
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
