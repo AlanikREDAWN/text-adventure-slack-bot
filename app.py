@@ -606,7 +606,7 @@ def attack(ack, respond, command, client, say, body, logger):
 
         if "training dummy" in user_text or "dummy" in user_text:
             if current_room == tutorialstory['rooms']['training_room']:
-                if great_hammer[user_id] == True:
+                if user_id in great_hammer and great_hammer[user_id] == True:
                     client.chat_postMessage(channel=user_id, text=f"{tutorialstory['npcs']['dummy']['interact_options'][0]['response']}")
                 else:
                     client.chat_postMessage(channel=user_id, text="What on earth are you planning on attacking with? Find a weapon first")
