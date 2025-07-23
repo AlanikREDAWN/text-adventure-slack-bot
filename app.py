@@ -103,7 +103,28 @@ def start_adventure(ack, respond, command, client, say):
 
 @app.action("start_adventures_with_odif")
 def start_adventures_with_odif(ack, respond, command, client, say, body):
-    pass
+    ack()
+    channel_id = body["channel"]["id"]
+    message_ts = body["message"]["ts"]
+    updated_blocks = []
+    for block in body["message"]["blocks"]:
+        if block.get("type") == "actions" and any(
+            element.get("action_id") == "start_adventures_with_odif"
+            for element in block.get("elements", [])
+        ):
+            continue  
+        updated_blocks.append(block)
+    client.chat_update(
+        channel=channel_id,
+        ts=message_ts,
+        blocks=updated_blocks
+    )
+    user_id = body["user"]["id"]
+    logging.info(f"/startadventure called by user_id: {user_id}")
+    current_adventure[user_id] = "adventures_with_odif"
+
+    
+
 
 @app.action("start_adventure_tutorial")
 def start_adventure_tutorial(ack, respond, command, client, say, body):
