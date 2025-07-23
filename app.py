@@ -74,7 +74,17 @@ def start_adventure(ack, respond, command, client, say):
 					},
 					"value": "Tutorial Adventure",
 					"action_id": "start_adventure_tutorial"
-				}
+				},
+                {
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Adventures with Odif",
+						"emoji": True
+					},
+					"value": "Adventures with Odif",
+					"action_id": "start_adventures_with_odif"
+				},
 			]
 		}
 	]
@@ -91,6 +101,9 @@ def start_adventure(ack, respond, command, client, say):
         # respond(response_message)
         respond(f"Error sending DM: {e}")
 
+@app.action("start_adventures_with_odif")
+def start_adventures_with_odif(ack, respond, command, client, say, body):
+    pass
 
 @app.action("start_adventure_tutorial")
 def start_adventure_tutorial(ack, respond, command, client, say, body):
