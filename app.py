@@ -533,6 +533,10 @@ def talkto(ack, respond, command, client, say, body, logger):
                 client.chat_postMessage(channel=user_id, text=f"*Interact Options:* '{tutorialstory['npcs']['glykoy']['interact_options'][0]['option']}', '{tutorialstory['npcs']['glykoy']['interact_options'][1]['option']}'")
 
                 waiting_for_response_glykoy[user_id] = channel_id
+            else:
+                client.chat_postMessage(channel=user_id, text="*Glykoy* is not in this room")
+        else:
+            client.chat_postMessage(channel=user_id, text="Please enter a valid npc to talk to")
     else:
         respond("Error")
 
@@ -557,6 +561,32 @@ def handle_message(message, client, logger, respond, say):
             client.chat_postMessage(channel=user_id, text="Please enter a vaild response")
     else:
         pass
+
+@app.command("/pickup")
+def pickup(ack, respond, command, client, say, body, logger):
+    ack()
+
+    user_id = command["user_id"]
+    channel_id = command["channel_id"]
+    if current_adventure[user_id] == "tutorial":
+        user_text = command.get("text", "").strip().lower()
+        
+        if user_id not in user_locations:
+            respond("You need to start the adventure first using `/startadventure`.")
+            return
+
+        current_room = user_locations[user_id]
+
+        if "great hammer" in user_text:
+            if current_room == tutorialstory['rooms']['great_hall']:
+                client.chat_postMessage(channel=user_id, text=f"You have picked up the *Great Hammer*")
+            else:
+                client.chat_postMessage(channel=user_id, text="The *Great Hammer* is not in this room")
+        else:
+            client.chat_postMessage(channel=user_id, text="Please enter a valid item to pickup")
+    else:
+        respond("Error")
+
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
