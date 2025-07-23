@@ -548,9 +548,9 @@ def handle_message(message, client, logger, respond, say):
             client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
             del waiting_for_response_glykoy[user_id]
         else:
-            respond("nope")
+            say("nope")
     else:
-        respond("hi")
+        pass
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
