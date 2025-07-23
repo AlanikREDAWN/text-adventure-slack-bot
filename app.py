@@ -31,6 +31,38 @@ current_adventure = {}
 waiting_for_response_glykoy = {}
 great_hammer = {}
 waiting_for_response = {}
+# if user_id in waiting_for_response_glykoy and waiting_for_response_glykoy[user_id] == channel_id:
+# if user_id in great_hammer and great_hammer[user_id] == True:
+visited_hallway = {}
+visited_training_room = {}
+visited_ballroom = {}
+talked_to_glykoy_1 = {}
+talked_to_glykoy_2 = {}
+hit_dummy = {}
+
+notified_users = set()
+
+def check_tutorial_conditions(user_id):
+    return (
+        visited_hallway.get(user_id) and
+        visited_training_room.get(user_id) and
+        visited_ballroom.get(user_id) and
+        talked_to_glykoy_1.get(user_id) and
+        talked_to_glykoy_2.get(user_id) and
+        hit_dummy.get(user_id)
+    )
+
+def background_checker(channel_id, client):
+    while True:
+        for user_id in set(visited_hallway.keys()):
+            if user_id in notified_users:
+                continue
+            if check_tutorial_conditions(user_id):
+                client.chat_postMessage(channel=channel_id, text=f"<@{user_id}> You've completed the tutorial! 🎉")
+                notified_users.add(user_id)
+            time.sleep(1)
+
+threading.Thread(target=lambda: background_checker("D094KJMG7L0"), daemon=True).start()
 
 
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -352,6 +384,7 @@ def go(ack, respond, command, client, say, body, logger):
                 if current_room == tutorialstory['rooms']['great_hall']:
                     # tutorial_player_location = tutorialstory['rooms']['hallway']
                     user_locations[user_id] = tutorialstory['rooms']['hallway']
+                    visited_hallway[user_id] = True
                     send_room(user_locations[user_id])
                     # send_room(tutorial_player_location)
                 else:
@@ -402,6 +435,7 @@ def go(ack, respond, command, client, say, body, logger):
             # try:
                 if current_room == tutorialstory['rooms']['hallway']:
                     user_locations[user_id] = tutorialstory['rooms']['training_room']
+                    visited_training_room[user_id] = True
                     send_room(user_locations[user_id])
                     # tutorial_player_location = tutorialstory['rooms']['training_room']
                     # send_room(tutorial_player_location)
@@ -409,6 +443,7 @@ def go(ack, respond, command, client, say, body, logger):
                     # tutorial_player_location = tutorialstory['rooms']['hallway']
                     # send_room(tutorial_player_location)
                     user_locations[user_id] = tutorialstory['rooms']['hallway']
+                    visited_hallway[user_id] = True
                     send_room(user_locations[user_id])
                 else:
                     respond("You can't go east from here!")
@@ -438,9 +473,11 @@ def go(ack, respond, command, client, say, body, logger):
                     # tutorial_player_location = tutorialstory['rooms']['ballroom']
                     # send_room(tutorial_player_location)
                     user_locations[user_id] = tutorialstory['rooms']['ballroom']
+                    visited_ballroom[user_id] = True
                     send_room(user_locations[user_id])
                 elif current_room == tutorialstory['rooms']['training_room']:
                     user_locations[user_id] = tutorialstory['rooms']['hallway']
+                    visited_hallway[user_id] = True
                     send_room(user_locations[user_id])
                     # tutorial_player_location = tutorialstory['rooms']['hallway']
                     # send_room(tutorial_player_location)
@@ -594,9 +631,11 @@ def handle_message(message, client, logger, respond, say):
 
         if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
             client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
+            talked_to_glykoy_1[user_id] = True
             del waiting_for_response_glykoy[user_id]
         elif "where" in text.lower() and "do" in text.lower() and "i" in text.lower() and "start" in text.lower():
             client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][1]['response']}")
+            talked_to_glykoy_2[user_id] = True
             del waiting_for_response_glykoy[user_id]
         else:
             client.chat_postMessage(channel=user_id, text="Please enter a vaild response")
@@ -671,6 +710,7 @@ def attack(ack, respond, command, client, say, body, logger):
             if current_room == tutorialstory['rooms']['training_room']:
                 if user_id in great_hammer and great_hammer[user_id] == True:
                     client.chat_postMessage(channel=user_id, text=f"{tutorialstory['npcs']['dummy']['interact_options'][0]['response']}")
+                    hit_dummy[user_id] = True
                 else:
                     client.chat_postMessage(channel=user_id, text="What on earth are you planning on attacking with? Find a weapon first")
             else:
