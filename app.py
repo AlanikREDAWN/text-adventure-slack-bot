@@ -125,9 +125,9 @@ def start_adventures_with_odif(ack, respond, command, client, say, body):
     current_adventure[user_id] = "adventures_with_odif"
 
     client.chat_postMessage(channel=user_id, text="You walk up to the door. It's a strikingly bright blue color. You are feeling slightly nervous about what responsibilities lay beyond you. What do you do next?")
-    time.sleep(0.3)
+    time.sleep(0.5)
     client.chat_postMessage(channel=user_id, text=f"*Options:* 'Knock on the door' or 'Turn around and leave'")
-    
+
     waiting_for_response[user_id] = channel_id
 
 
@@ -600,6 +600,29 @@ def handle_message(message, client, logger, respond, say):
             del waiting_for_response_glykoy[user_id]
         else:
             client.chat_postMessage(channel=user_id, text="Please enter a vaild response")
+    elif user_id in waiting_for_response and waiting_for_response[user_id] == channel_id:
+
+        if "turn" in text.lower() and "around" in text.lower() and "and" in text.lower() and "leave" in text.lower():
+            client.chat_postMessage(channel=user_id, text="You decide to turn back. Upon turning around, you see that it is now raining. Hard. Real hard. Thunder and lightning and everything What do you do next?")
+            time.sleep(0.5)
+            client.chat_postMessage(channel=user_id, text=f"*Options:* 'Walk home in the rain' or 'Turn back around to face the door'")
+        elif "knock" in text.lower and "on" in text.lower() and "the" in text.lower() and "door" in text.lower():
+            client.chat_postMessage(channel=user_id, text="You knock. The door opens. Standing in the doorway you see your best friend, Amy. Behind Amy, there is a puppy, eagerly wagging his tail.")
+            time.sleep(0.5)
+            client.chat_postMessage(channel=user_id, text="'Hey!', says Amy. She smiles brightly.")
+            time.sleep(0.5)
+            client.chat_postMessage(channel=user_id, text="'Are you ready to take care of Odif?'")
+            time.sleep(0.5)
+            client.chat_postMessage(channel=user_id, text=f"*Options:* 'Yes' or 'No'")
+            client.chat_postMessage(channel=user_id, text="Story in progress...this is where it ends, for now")
+
+        if "walk" in text.lower() and "home" in text.lower() and "in" in text.lower() and "the" in text.lower() and "rain" in text.lower():
+            client.chat_postMessage(channel=user_id, text="You decide to walk back home. On the way home, you walk right past a lightning rod as a bolt of lightning arcs towards it. You don't make it")
+            del waiting_for_response[user_id]
+        elif "turn" in text.lower() and "back" in text.lower() and "around" in text.lower() and "to" in text.lower() and "face" in text.lower() and "the" in text.lower() and "door" in text.lower():
+            client.chat_postMessage(channel=user_id, text="You walk up to the door. It's a strikingly bright blue color. You are feeling slightly nervous about what responsibilities lay beyond you. What do you do next?")
+            time.sleep(0.5)
+            client.chat_postMessage(channel=user_id, text=f"*Options:* 'Knock on the door' or 'Turn around and leave'")
     else:
         pass
 
