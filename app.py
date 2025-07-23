@@ -542,10 +542,11 @@ def handle_message(message, client, logger, respond, say):
     # say(f"Echo: You said '{text}'")
 
     if user_id in waiting_for_response_glykoy and waiting_for_response_glykoy[user_id] == channel_id:
-        del waiting_for_response_glykoy[user_id]
+        
 
         if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
             client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
+            del waiting_for_response_glykoy[user_id]
         else:
             respond("nope")
     else:
