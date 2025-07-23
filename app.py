@@ -15,8 +15,8 @@ logging.basicConfig(level=logging.INFO)
 client = WebClient(token=os.environ["SLACK_BOT_TOKEN"])
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-log = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 app = App(token=SLACK_BOT_TOKEN)
 
@@ -58,10 +58,10 @@ def check_tutorial_conditions(user_id):
 
 def background_checker(channel_id):
     while True:
-        log.debug("checking...")
+        logger.debug("checking...")
         for user_id in set(visited_hallway.keys()):
-            log.debug(f"Checking user: {user_id}")
-            log.debug("Conditions:",
+            logger.debug(f"Checking user: {user_id}")
+            logger.debug("Conditions:",
                          visited_hallway.get(user_id),
                          visited_training_room.get(user_id),
                          visited_ballroom.get(user_id),
