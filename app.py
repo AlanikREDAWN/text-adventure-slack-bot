@@ -42,7 +42,7 @@ talked_to_glykoy_1 = {}
 talked_to_glykoy_2 = {}
 hit_dummy = {}
 
-# notified_users = set()
+notified_users = set()
 
 
 
@@ -68,11 +68,11 @@ def background_checker(channel_id):
                          talked_to_glykoy_1.get(user_id),
                          talked_to_glykoy_2.get(user_id),
                          hit_dummy.get(user_id))
-            # if user_id in notified_users:
-            #     continue
+            if user_id in notified_users:
+                continue
             if check_tutorial_conditions(user_id):
                 client.chat_postMessage(channel=channel_id, text=f"<@{user_id}> You've completed the tutorial! 🎉")
-                # notified_users.add(user_id)
+                notified_users.add(user_id)
             time.sleep(1)
 
 
