@@ -2,6 +2,7 @@ import os
 import yaml
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
+from slack_sdk import WebClient
 from dotenv import load_dotenv
 import threading
 from flask import Flask
@@ -11,7 +12,7 @@ import re
 import time
 logging.basicConfig(level=logging.INFO)
 # load_dotenv()
-
+client = WebClient(token=os.environ["SLACK_BOT_TOKEN"])
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")
 
@@ -54,7 +55,7 @@ def check_tutorial_conditions(user_id):
         hit_dummy.get(user_id)
     )
 
-def background_checker(channel_id, client):
+def background_checker(channel_id):
     while True:
         logging.info("checking...")
         for user_id in set(visited_hallway.keys()):
@@ -73,7 +74,7 @@ def background_checker(channel_id, client):
                 # notified_users.add(user_id)
             time.sleep(1)
 
-threading.Thread(target=lambda: background_checker("D094KJMG7L0"), daemon=True).start()
+
 
 
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -790,3 +791,4 @@ if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
     handler = SocketModeHandler(app, app_token=os.environ.get("SLACK_APP_TOKEN"))
     handler.start()
+    threading.Thread(target=lambda: background_checker("D094KJMG7L0"), daemon=True).start()
