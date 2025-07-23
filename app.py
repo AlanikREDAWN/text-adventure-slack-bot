@@ -539,17 +539,17 @@ def handle_message(message, client, logger, respond, say):
     channel_id = message["channel"]
     text = message.get("text", "").lower()
     # respond("testing")
-    say(f"Echo: You said '{text}'")
+    # say(f"Echo: You said '{text}'")
 
-    # if user_id in waiting_for_response_glykoy and waiting_for_response_glykoy[user_id] == channel_id:
-    #     del waiting_for_response_glykoy[user_id]
+    if user_id in waiting_for_response_glykoy and waiting_for_response_glykoy[user_id] == channel_id:
+        del waiting_for_response_glykoy[user_id]
 
-    #     if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
-    #         client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
-    #     else:
-    #         respond("nope")
-    # else:
-    #     respond("hi")
+        if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
+            client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
+        else:
+            respond("nope")
+    else:
+        pass
 
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
