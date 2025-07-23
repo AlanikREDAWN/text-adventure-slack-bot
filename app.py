@@ -30,6 +30,7 @@ user_locations = {}
 current_adventure = {}
 waiting_for_response_glykoy = {}
 great_hammer = {}
+waiting_for_response = {}
 
 
 # tutorial_player_location = tutorialstory['rooms']['great_hall']
@@ -123,7 +124,12 @@ def start_adventures_with_odif(ack, respond, command, client, say, body):
     logging.info(f"/startadventure called by user_id: {user_id}")
     current_adventure[user_id] = "adventures_with_odif"
 
+    client.chat_postMessage(channel=user_id, text="You walk up to the door. It's a strikingly bright blue color. You are feeling slightly nervous about what responsibilities lay beyond you. What do you do next?")
+    time.sleep(0.3)
+    client.chat_postMessage(channel=user_id, text=f"*Options:* 'Knock on the door' or 'Turn around and leave'")
     
+    waiting_for_response[user_id] = channel_id
+
 
 
 @app.action("start_adventure_tutorial")
