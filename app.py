@@ -790,7 +790,7 @@ def attack(ack, respond, command, client, say, body, logger):
 if __name__ == "__main__":
     # SocketModeHandler(app, SLACK_APP_TOKEN).start()
     threading.Thread(target=run_flask).start()
-    threading.Thread(target=lambda: background_checker("D094KJMG7L0"), daemon=True).start()
+    threading.Thread(target=lambda: background_checker("U07AZFQLPQ8"), daemon=True).start()
     handler = SocketModeHandler(app, app_token=os.environ.get("SLACK_APP_TOKEN"))
     handler.start()
     
