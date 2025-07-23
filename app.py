@@ -547,8 +547,11 @@ def handle_message(message, client, logger, respond, say):
         if "where" in text.lower() and "am" in text.lower() and "i" in text.lower():
             client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][0]['response']}")
             del waiting_for_response_glykoy[user_id]
+        elif "where" in text.lower() and "do" in text.lower() and "i" in text.lower() and "start" in text.lower():
+            client.chat_postMessage(channel=user_id, text=f"*Glykoy:* {tutorialstory['npcs']['glykoy']['interact_options'][1]['response']}")
+            del waiting_for_response_glykoy[user_id]
         else:
-            pass
+            client.chat_postMessage(channel=user_id, text="Please enter a vaild response")
     else:
         pass
 
