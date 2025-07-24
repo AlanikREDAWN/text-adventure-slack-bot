@@ -658,7 +658,7 @@ def handle_message(message, client, logger, respond, say):
             client.chat_postMessage(channel=user_id, text="You decide to turn back. Upon turning around, you see that it is now raining. Hard. Real hard. Thunder and lightning and everything What do you do next?")
             time.sleep(0.5)
             client.chat_postMessage(channel=user_id, text=f"*Options:* 'Walk home in the rain' or 'Turn back around to face the door'")
-        elif "knock" in text.lower and "on" in text.lower() and "the" in text.lower() and "door" in text.lower():
+        elif "knock" in text.lower() and "on" in text.lower() and "the" in text.lower() and "door" in text.lower():
             client.chat_postMessage(channel=user_id, text="You knock. The door opens. Standing in the doorway you see your best friend, Amy. Behind Amy, there is a puppy, eagerly wagging his tail.")
             time.sleep(0.5)
             client.chat_postMessage(channel=user_id, text="'Hey!', says Amy. She smiles brightly.")
