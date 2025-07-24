@@ -667,6 +667,7 @@ def handle_message(message, client, logger, respond, say):
             time.sleep(0.5)
             client.chat_postMessage(channel=user_id, text=f"*Options:* 'Yes' or 'No'")
             client.chat_postMessage(channel=user_id, text="Story in progress...this is where it ends, for now")
+            del waiting_for_response[user_id]
 
         if "walk" in text.lower() and "home" in text.lower() and "in" in text.lower() and "the" in text.lower() and "rain" in text.lower():
             client.chat_postMessage(channel=user_id, text="You decide to walk back home. On the way home, you walk right past a lightning rod as a bolt of lightning arcs towards it. You don't make it")
