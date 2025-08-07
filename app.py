@@ -85,7 +85,7 @@ def home():
     return "Slack bot running!"
 
 def run_flask():
-    port = int(os.environ.get("PORT", 3000))
+    port = int(os.environ.get("PORT", 8080))
     flask_app.run(host="0.0.0.0", port=port)
 
 @app.command("/startadventure")
