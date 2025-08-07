@@ -12,9 +12,10 @@ import re
 import time
 logging.basicConfig(level=logging.INFO)
 # load_dotenv()
-client = WebClient(token=os.environ["SLACK_BOT_TOKEN"])
+
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN")
+client = WebClient(token=SLACK_BOT_TOKEN)
 # logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
